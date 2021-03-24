@@ -1,0 +1,11 @@
+#numpy==1.19.4
+#scipy==1.5.4
+#spidev
+#fake-rpigpio==0.1.1
+pyyaml
+rpi.gpio
+pigpio-dht
+gpiozero
+prometheus_client
+flask
+rethinkdb

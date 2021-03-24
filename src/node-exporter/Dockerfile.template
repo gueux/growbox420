@@ -1,0 +1,23 @@
+FROM balenalib/%%BALENA_MACHINE_NAME%%-ubuntu:bionic-run
+
+# Enable systemd
+ENV INITSYSTEM on
+
+# versions
+ENV NODE_EXPORTER_VERSION 1.1.1
+
+# arch
+ENV DIST_ARCH linux-armv7
+
+WORKDIR /app
+
+# get node exporter
+RUN install_packages wget
+RUN wget https://github.com/prometheus/node_exporter/releases/download/v$NODE_EXPORTER_VERSION/node_exporter-$NODE_EXPORTER_VERSION.$DIST_ARCH.tar.gz  \
+	&& tar xvfz node_exporter-$NODE_EXPORTER_VERSION.$DIST_ARCH.tar.gz \
+	&& rm node_exporter-$NODE_EXPORTER_VERSION.$DIST_ARCH.tar.gz \
+	&& mv node_exporter-$NODE_EXPORTER_VERSION.$DIST_ARCH node-exporter
+
+EXPOSE     9100
+
+CMD        [ "/app/node-exporter/node_exporter" ]

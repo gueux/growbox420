@@ -1,0 +1,17 @@
+### https://grafana.com/docs/grafana/latest/administration/provisioning/#plugins
+
+apiVersion: 1
+
+# apps:
+#     # <string> the type of app, plugin identifier. Required
+#   - type: camptocamp-prometheus-alertmanager-datasource
+#     # <int> Org ID. Default to 1, unless org_name is specified
+#     org_id: 1
+#     # <bool> disable the app. Default to false.
+#     disabled: false
+#     # <map> fields that will be converted to json and stored in jsonData. Custom per app.
+#     jsonData:
+#       # key/value pairs of string to object
+#     # <map> fields that will be converted to json, encrypted and stored in secureJsonData. Custom per app.
+#     secureJsonData:
+#       # key/value pairs of string to string

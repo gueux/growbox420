@@ -1,0 +1,28 @@
+FROM balenalib/%%BALENA_MACHINE_NAME%%-ubuntu:bionic-run
+
+# Enable systemd
+ENV INITSYSTEM on
+
+# versions
+ENV ALERTMANAGER_VERSION 0.21.0
+
+# arch
+ENV DIST_ARCH linux-armv7
+
+WORKDIR /app
+
+# get prometheus alertmanager
+RUN install_packages wget 
+RUN wget https://github.com/prometheus/alertmanager/releases/download/v$ALERTMANAGER_VERSION/alertmanager-$ALERTMANAGER_VERSION.$DIST_ARCH.tar.gz  \
+	&& tar xvfz alertmanager-$ALERTMANAGER_VERSION.$DIST_ARCH.tar.gz \
+	&& rm alertmanager-$ALERTMANAGER_VERSION.$DIST_ARCH.tar.gz \
+	&& mv alertmanager-$ALERTMANAGER_VERSION.$DIST_ARCH alertmanager
+
+COPY ./alertmanager.yml /etc/alertmanager/
+
+VOLUME     [ "/alertmanager" ]
+WORKDIR    /alertmanager
+ENTRYPOINT [  ]
+CMD        [ "/app/alertmanager/alertmanager", \
+			 "--storage.path=/alertmanager", \
+			 "--config.file=/etc/alertmanager/alertmanager.yml" ]

@@ -1,0 +1,164 @@
+groups:
+  - name: growbox
+    rules:
+
+    - alert: LightON
+      expr: growbox_light_dark_mode{growbox_light_dark_mode='Day'} == 1 and ON() growbox_light_enabled == 0
+      for: 1s
+      labels:
+        severity: 1
+      annotations:
+        summary: "Light must be ON"
+        description: "Current mode is {{ $labels.growbox_light_dark_mode }} and Light must be ON"
+    - alert: LightOFF
+      expr: growbox_light_dark_mode{growbox_light_dark_mode='Night'} == 1 and ON() growbox_light_enabled == 1
+      for: 1s
+      labels:
+        severity: 1
+      annotations:
+        summary: "Light must be OFF"
+        description: "Current mode is {{ $labels.growbox_light_dark_mode }} and Light must be OFF"
+    - alert: TemperatureLOW
+      expr: growbox_phase_name{growbox_phase_name="vegetative"} == 1 and ON() growbox_temperature_celsius < 23
+      for: 5s
+      labels:
+        severity: 4
+      annotations:
+        summary: "Temperature is lower then required"
+        description: "Temperature is not suitable for Phase {{ $labels.growbox_phase_name }}"
+    - alert: TemperatureHIGH
+      expr: growbox_phase_name{growbox_phase_name="vegetative"} == 1 and ON() growbox_temperature_celsius > 26
+      for: 5s
+      labels:
+        severity: 4
+      annotations:
+        summary: "Temperature is higher then required"
+        description: "Temperature is not suitable for Phase {{ $labels.growbox_phase_name }}"
+    - alert: HumudityLOW
+      expr: growbox_phase_name{growbox_phase_name="vegetative"} == 1 and ON() growbox_humidity_percents < 80
+      for: 5s
+      labels:
+        severity: 2
+      annotations:
+        summary: "Humudity is lower then required"
+        description: "Humudity is not suitable for Phase {{ $labels.growbox_phase_name }}"
+    - alert: HumudityHIGH
+      expr: growbox_phase_name{growbox_phase_name="vegetative"} == 1 and ON() growbox_humidity_percents > 100
+      for: 5s
+      labels:
+        severity: 2
+      annotations:
+        summary: "Humudity is higher then required"
+        description: "Humudity is not suitable for Phase {{ $labels.growbox_phase_name }}"
+    - alert: MoistureLOW
+      expr: growbox_phase_name{growbox_phase_name="vegetative"} == 1 and ON() growbox_moisture_percents < 65
+      for: 5s
+      labels:
+        severity: 3
+      annotations:
+        summary: "Moisture is lower then required"
+        description: "Moisture is not suitable for Phase {{ $labels.growbox_phase_name }}"
+    - alert: MoistureHIGH
+      expr: growbox_phase_name{growbox_phase_name="vegetative"} == 1 and ON() growbox_moisture_percents > 75
+      for: 5s
+      labels:
+        severity: 3
+      annotations:
+        summary: "Moisture is higher then required"
+        description: "Moisture is not suitable for Phase {{ $labels.growbox_phase_name }}"
+    - alert: TemperatureLOW
+      expr: growbox_phase_name{growbox_phase_name="flowering"} == 1 and ON() growbox_temperature_celsius < 22
+      for: 5s
+      labels:
+        severity: 4
+      annotations:
+        summary: "Temperature is lower then required"
+        description: "Temperature is not suitable for Phase {{ $labels.growbox_phase_name }}"
+    - alert: TemperatureHIGH
+      expr: growbox_phase_name{growbox_phase_name="flowering"} == 1 and ON() growbox_temperature_celsius > 28
+      for: 5s
+      labels:
+        severity: 4
+      annotations:
+        summary: "Temperature is higher then required"
+        description: "Temperature is not suitable for Phase {{ $labels.growbox_phase_name }}"
+    - alert: HumudityLOW
+      expr: growbox_phase_name{growbox_phase_name="flowering"} == 1 and ON() growbox_humidity_percents < 60
+      for: 5s
+      labels:
+        severity: 2
+      annotations:
+        summary: "Humudity is lower then required"
+        description: "Humudity is not suitable for Phase {{ $labels.growbox_phase_name }}"
+    - alert: HumudityHIGH
+      expr: growbox_phase_name{growbox_phase_name="flowering"} == 1 and ON() growbox_humidity_percents > 70
+      for: 5s
+      labels:
+        severity: 2
+      annotations:
+        summary: "Humudity is higher then required"
+        description: "Humudity is not suitable for Phase {{ $labels.growbox_phase_name }}"
+    - alert: MoistureLOW
+      expr: growbox_phase_name{growbox_phase_name="flowering"} == 1 and ON() growbox_moisture_percents < 75
+      for: 5s
+      labels:
+        severity: 3
+      annotations:
+        summary: "Moisture is lower then required"
+        description: "Moisture is not suitable for Phase {{ $labels.growbox_phase_name }}"
+    - alert: MoistureHIGH
+      expr: growbox_phase_name{growbox_phase_name="flowering"} == 1 and ON() growbox_moisture_percents > 80
+      for: 5s
+      labels:
+        severity: 3
+      annotations:
+        summary: "Moisture is higher then required"
+        description: "Moisture is not suitable for Phase {{ $labels.growbox_phase_name }}"
+    - alert: TemperatureLOW
+      expr: growbox_phase_name{growbox_phase_name="harvest"} == 1 and ON() growbox_temperature_celsius < 25
+      for: 5s
+      labels:
+        severity: 4
+      annotations:
+        summary: "Temperature is lower then required"
+        description: "Temperature is not suitable for Phase {{ $labels.growbox_phase_name }}"
+    - alert: TemperatureHIGH
+      expr: growbox_phase_name{growbox_phase_name="harvest"} == 1 and ON() growbox_temperature_celsius > 30
+      for: 5s
+      labels:
+        severity: 4
+      annotations:
+        summary: "Temperature is higher then required"
+        description: "Temperature is not suitable for Phase {{ $labels.growbox_phase_name }}"
+    - alert: HumudityLOW
+      expr: growbox_phase_name{growbox_phase_name="harvest"} == 1 and ON() growbox_humidity_percents < 50
+      for: 5s
+      labels:
+        severity: 2
+      annotations:
+        summary: "Humudity is lower then required"
+        description: "Humudity is not suitable for Phase {{ $labels.growbox_phase_name }}"
+    - alert: HumudityHIGH
+      expr: growbox_phase_name{growbox_phase_name="harvest"} == 1 and ON() growbox_humidity_percents > 65
+      for: 5s
+      labels:
+        severity: 2
+      annotations:
+        summary: "Humudity is higher then required"
+        description: "Humudity is not suitable for Phase {{ $labels.growbox_phase_name }}"
+    - alert: MoistureLOW
+      expr: growbox_phase_name{growbox_phase_name="harvest"} == 1 and ON() growbox_moisture_percents < 55
+      for: 5s
+      labels:
+        severity: 3
+      annotations:
+        summary: "Moisture is lower then required"
+        description: "Moisture is not suitable for Phase {{ $labels.growbox_phase_name }}"
+    - alert: MoistureHIGH
+      expr: growbox_phase_name{growbox_phase_name="harvest"} == 1 and ON() growbox_moisture_percents > 70
+      for: 5s
+      labels:
+        severity: 3
+      annotations:
+        summary: "Moisture is higher then required"
+        description: "Moisture is not suitable for Phase {{ $labels.growbox_phase_name }}"

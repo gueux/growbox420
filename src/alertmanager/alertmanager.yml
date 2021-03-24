@@ -1,0 +1,15 @@
+global:
+  resolve_timeout: 1m
+
+receivers:
+  - name: operator
+    webhook_configs:
+      - url: http://operator:5000/alerts
+        send_resolved: true
+        max_alerts: 0
+
+route:
+  group_wait:  1s
+  group_interval: 1s
+  receiver: operator
+  repeat_interval: 30s

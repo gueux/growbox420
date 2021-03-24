@@ -1,0 +1,71 @@
+version: '2'
+
+services:
+
+  operator:
+    build: ./src/operator
+    #command: [ "python3", "manage.py", "--db-setup", "&&", "python3", "start.py"]
+    privileged: true
+    environment:
+      PIGPIO_ADDR: gpio
+      RDB_HOST: storage
+    ports:
+      - "5000:5000"
+    depends_on:
+      - gpio
+      - storage
+
+  storage:
+    build: ./src/storage
+    volumes:
+      - "rethinkdb:/data"
+    ports:
+      - "8080:8080"
+
+  gpio:
+    build: ./src/gpio
+    privileged: true
+    # devices:
+    #   - "/dev/i2c-1:/dev/i2c-1"
+    #   - "/dev/mem:/dev/mem"
+    #   - "/dev/ttyACM0:/dev/ttyACM0"
+    # cap_add:
+    #   - SYS_RAWIO
+    expose:
+      - "8888"
+
+  prometheus:
+    build: ./src/prometheus/
+    volumes:
+      - "prometheus:/prometheus"
+    expose:
+      - "9090"
+    ports:
+      - "9090:9090"
+
+  alertmanager:
+    build: ./src/alertmanager/
+    # volumes:
+    #   - "alertmanager:/alertmanager"
+    expose:
+      - "9093"
+    ports:
+      - "9093:9093"
+
+  grafana:
+    build: ./src/grafana/
+    # volumes:
+    #   - "grafana:/var/lib/grafana"
+    ports:
+      - "3000:3000"
+
+  node-exporter:
+    build: ./src/node-exporter/
+    expose:
+      - "9100"
+
+volumes:
+  rethinkdb:
+  prometheus:
+  # alertmanager:
+  # grafana:
